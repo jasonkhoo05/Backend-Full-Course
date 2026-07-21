@@ -7,6 +7,10 @@ const express = require('express')
 const app = express()
 
 // IP address is the address of the device, port is a location within the device
+// The URL address that's mapped to the IP address that locates this server connected to the network 
+// is http://localhost:3000
+// IP address is 127.0.0.1:3000
+
 const PORT = 3000
 
 // listens to incoming network requests to its IP address, specifically at this port
