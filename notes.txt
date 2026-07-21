@@ -1,0 +1,18 @@
+Steps for creating a new project:
+# 1) Create a Node.js project
+npm init -y
+
+# 2) Install Express.js
+npm install express
+
+-----------------------------------------------------------------
+
+package.json contains all the specification for the project.
+
+-----------------------------------------------------------------
+
+# This package is so that when you make changes, you don't need to restart the server
+# It is a developer dependency, meaning it should not used in production, it's specifically for development only
+npm install --save-dev nodemon
+
+# now "dev": "node server.js" becomes "dev": "nodemon server.js" in package.json
