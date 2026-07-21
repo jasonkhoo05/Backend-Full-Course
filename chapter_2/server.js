@@ -17,3 +17,5 @@ app.listen(PORT, () => {console.log(`Server has started on: ${PORT}`)})
 // enter node server.js in terminal to run this file
 // After adding "dev": "node server.js" to scripts in package.json, 
 // we can run "npm run dev" in terminal also
+
+// "dev": "node server.js" becomes "dev": "nodemon server.js" in package.json after installing nodemon
