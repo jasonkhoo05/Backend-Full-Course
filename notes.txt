@@ -16,3 +16,15 @@ package.json contains all the specification for the project.
 npm install --save-dev nodemon
 
 # now "dev": "node server.js" becomes "dev": "nodemon server.js" in package.json
+
+---------------------------------------------------------------------
+
+Endpoints: HTTP VERBS (method) and Routes (paths)
+http://localhost:3000/dashboard
+dashboard is the route
+
+We can define actions at these endpoints that execute a body of logic
+to respond appropriately to network requests
+
+We need to configure these routes to interpret specific verbs such as GET
+to help us understand the intention of the network request

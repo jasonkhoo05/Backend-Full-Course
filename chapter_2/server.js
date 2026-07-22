@@ -1,25 +1,24 @@
-// Makes it so that Express package is required. We assign whatever is inside Express package to a 
-// variable so that we can use it all throughout the project (basically import Express)
 const express = require('express')
 
-// Define backend application.
-// This creates the backend application
 const app = express()
-
-// IP address is the address of the device, port is a location within the device
-// The URL address that's mapped to the IP address that locates this server connected to the network 
-// is http://localhost:3000
-// IP address is 127.0.0.1:3000
 
 const PORT = 3000
 
-// listens to incoming network requests to its IP address, specifically at this port
-// () => {} is an arrow function (shortcut syntax)
-// the second argument is a function to be executed when the server is up and running
+// Endpoints: HTTP VERBS (methods) and Routes
+
+// Configuring our server to handle incoming get requests
+// The first argument of get() is the route (/ here means home route)
+// The second argument is the logic that runs when we receive a GET request
+// req is request, res is response
+app.get('/', (req, res) => {
+    // This is an endpoint
+    console.log('I hit an endpoint', req.method) // req.method is GET
+    res.sendStatus(201) // response code 200 to 299 means success request
+})
+
+app.get('/dashboard', (req, res) => {
+    console.log('I hit the /dashboard endpoint')
+    res.send('hi')
+})
+
 app.listen(PORT, () => {console.log(`Server has started on: ${PORT}`)})
-
-// enter node server.js in terminal to run this file
-// After adding "dev": "node server.js" to scripts in package.json, 
-// we can run "npm run dev" in terminal also
-
-// "dev": "node server.js" becomes "dev": "nodemon server.js" in package.json after installing nodemon
