@@ -4,9 +4,7 @@ const app = express()
 
 const PORT = 3000
 
-let data1 = {
-    name: 'Jason'
-}
+let data1 = ['jason']
 
 // Middleware
 // configures the server to expect json data as an incoming request (for POST method)
@@ -39,8 +37,12 @@ app.post('/api/data', (req, res)=> {
     // to the server to handle this action, which is what this endpoint is for
 
     const newEntry = req.body // req.body is the data associated with the request
+    // newEntry here is json because we configured our server to expect json data as an incoming request
 
     console.log(newEntry)
+
+    // Here we append the name field of the json (newEntry) to data1 array
+    data1.push(newEntry.name)
 
     res.sendStatus(201) // status code 201 means created
 })
