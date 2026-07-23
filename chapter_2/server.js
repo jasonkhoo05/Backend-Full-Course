@@ -28,7 +28,7 @@ app.get('/dashboard', (req, res) => {
             <h1>Dashboard</h1>
             <a href="/">Home</a>
         </body>
-        
+
         // This gets printed on client's console
         <script>console.log('This is my script')</script>
         `)
@@ -37,7 +37,7 @@ app.get('/dashboard', (req, res) => {
 // API Endpoints
 app.get('/api/data', (req, res) => {
     console.log('This is for data')
-    res.send(data1)
+    res.status(202).send(data1) // we can put the status code in front of .send
 })
 
 app.post('/api/data', (req, res)=> {
