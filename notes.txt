@@ -45,3 +45,7 @@ Make sure to install REST Client by Huachao Mao extension
 
 It allows us to emulate a user sending out a network request 
 using files ending with .rest
+
+-------------------------------------------------------------
+CRUD: Create (post method), Read (get method), Update (put method), Delete (delete method)
+These are for controlling data modification

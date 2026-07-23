@@ -12,7 +12,12 @@ let data1 = {
 
 // Website endpoints
 app.get('/', (req, res) => {
-    res.send('<h1>Homepage</h1>')
+    res.send(`
+        <body style="background:pink;color:blue;">
+            <h1>Data:</h1>
+            <p>${JSON.stringify(data1)}</p>
+        </body>
+        `)
 })
 
 app.get('/dashboard', (req, res) => {
