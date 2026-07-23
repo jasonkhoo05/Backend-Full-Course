@@ -47,5 +47,10 @@ app.post('/api/data', (req, res)=> {
     res.sendStatus(201) // status code 201 means created
 })
 
+app.delete('/api/data', (req, res) => {
+    data1.pop()
+    console.log('Deleted the element at the end of the array')
+    res.sendStatus(203)
+})
 
 app.listen(PORT, () => {console.log(`Server has started on: ${PORT}`)})

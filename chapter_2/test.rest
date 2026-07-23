@@ -18,3 +18,6 @@ Content-Type: application/json
 ### We need to configure the parameter of the network request using Content-Type: application/json
 ### Now, when our server receives this request from this client emulator, it knows it's looking for json
 ### It can interpret that json and gain access to the value (E.g. "name": "Khoo")
+
+### DELETE ENDPOINT
+DELETE http://localhost:3000/api/data
