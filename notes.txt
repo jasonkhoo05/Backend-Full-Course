@@ -28,3 +28,20 @@ to respond appropriately to network requests
 
 We need to configure these routes to interpret specific verbs such as GET
 to help us understand the intention of the network request
+
+-----------------------------------------------------------------------------
+There are 2 types of endpoints: Website endpoint and API endpoint
+
+
+Website endpoints are for sending back HTML and they typically come when a user enters a 
+URL in a browser
+
+API endpoints are non-visual 
+E.g. when a user press submits for their username and password
+
+
+----------------------------------------------------------------------
+Make sure to install REST Client by Huachao Mao extension
+
+It allows us to emulate a user sending out a network request 
+using files ending with .rest
