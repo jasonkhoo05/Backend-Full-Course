@@ -8,7 +8,9 @@ let data1 = {
     name: 'Jason'
 }
 
-// Endpoints: HTTP VERBS (methods) and Routes
+// Middleware
+// configures the server to expect json data as an incoming request (for POST method)
+app.use(express.json())
 
 // Website endpoints
 app.get('/', (req, res) => {
@@ -29,6 +31,18 @@ app.get('/dashboard', (req, res) => {
 app.get('/api/data', (req, res) => {
     console.log('This is for data')
     res.send(data1)
+})
+
+app.post('/api/data', (req, res)=> {
+    // E.g. someone wants to create a user when they click a sign up button
+    // After the button is clicked, the browser is wired up to send out a network request 
+    // to the server to handle this action, which is what this endpoint is for
+
+    const newEntry = req.body // req.body is the data associated with the request
+
+    console.log(newEntry)
+
+    res.sendStatus(201) // status code 201 means created
 })
 
 

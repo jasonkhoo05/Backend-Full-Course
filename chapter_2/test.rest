@@ -6,3 +6,15 @@ GET http://localhost:3000/dashboard
 
 ### DATA ENDPOINT
 GET http://localhost:3000/api/data
+
+### DATA ENDPOINT FOR E.g. ADDING A USER
+POST http://localhost:3000/api/data
+Content-Type: application/json
+
+{
+    "name": "Khoo"
+}
+### We want to send the json object 
+### We need to configure the parameter of the network request using Content-Type: application/json
+### Now, when our server receives this request from this client emulator, it knows it's looking for json
+### It can interpret that json and gain access to the value (E.g. "name": "Khoo")
