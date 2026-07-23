@@ -17,7 +17,17 @@ app.get('/', (req, res) => {
             <h1>Data:</h1>
             <p>${JSON.stringify(data1)}</p>
             <a href="/dashboard">Dashboard</a>
+            <button onclick="deleteLastEntry()">Delete Last Entry</button>
         </body>
+
+        <script>
+            async function deleteLastEntry() {
+                const response = await fetch('/api/data', {
+                    method: 'DELETE'
+                    })
+
+                }
+        </script>
         `)
 })
 
