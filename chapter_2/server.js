@@ -16,13 +16,22 @@ app.get('/', (req, res) => {
         <body style="background:pink;color:blue;">
             <h1>Data:</h1>
             <p>${JSON.stringify(data1)}</p>
+            <a href="/dashboard">Dashboard</a>
         </body>
         `)
 })
 
 app.get('/dashboard', (req, res) => {
     console.log('I hit the /dashboard endpoint')
-    res.send('<h1>Dashboard</h1>')
+    res.send(`
+        <body>
+            <h1>Dashboard</h1>
+            <a href="/">Home</a>
+        </body>
+        
+        // This gets printed on client's console
+        <script>console.log('This is my script')</script>
+        `)
 })
 
 // API Endpoints
