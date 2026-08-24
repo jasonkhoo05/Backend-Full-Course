@@ -30,9 +30,10 @@ const __dirname = dirname(__filename)
 app.use(express.static(path.join(__dirname, '../public')))
 
 
-// Serving up the HTML file from the /public directory (dir)
+// app.use(express.static(path.join(__dirname, '../public'))) already serves index.html when browser calls /
+// We can do additional behaviour here
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'))
+    res.sendFile(path.join(__dirname, '../public', 'index.html'))
 })
 
 
