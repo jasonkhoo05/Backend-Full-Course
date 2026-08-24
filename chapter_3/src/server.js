@@ -5,6 +5,9 @@ import express from 'express'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
+import authRoutes from './routes/authRoutes.js'
+import todoRoutes from './routes/todoRoutes.js'
+
 const app = express()
 
 // Checks if PORT env variable exists, if no use 5000
@@ -37,6 +40,14 @@ app.use(express.static(path.join(__dirname, '../public')))
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'index.html'))
 })
+
+// Routes
+
+// this line takes all the routes defined in authRoutes.js and combine it with /auth
+// E.g. it becomes http://localhost:5000/auth/register
+app.use('/auth', authRoutes)
+
+app.use('/todos', todoRoutes)
 
 
 app.listen(PORT, () => {
