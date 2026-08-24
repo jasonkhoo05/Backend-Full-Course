@@ -21,3 +21,6 @@ db.exec(`
         FOREIGN KEY(user_id) REFERENCES users(id)
     )
 `)
+
+// Allows to interact with this db variable from other files
+export default db
