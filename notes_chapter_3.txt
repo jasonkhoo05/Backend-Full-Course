@@ -1,0 +1,14 @@
+# 1:49:55
+# authMiddleware.js handle all the authentication between the client and server side
+
+# 1:51:35
+npm install express 
+
+npm install bcryptjs
+# bcryptjs is the library for encrypting data (usernames and passwords)
+
+npm install jsonwebtoken
+# jsonwebtoken is a package to facilittate the authentication system
+
+# We can write in one line
+npm install express bcryptjs jsonwebtoken
