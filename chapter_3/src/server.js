@@ -15,6 +15,9 @@ const __filename = fileURLToPath(import.meta.url)
 // Get the directory name from the file path
 const __dirname = dirname(__filename)
 
+// Middleware 1
+app.use(express.json())
+//  Middleware 2
 // Serves the HTML file from the /public directory
 // Tells express to serve all files from the public folder as static assets/files
 // Any requests for the css files will be resolved to the public directory
@@ -28,7 +31,6 @@ const __dirname = dirname(__filename)
 // If it does, send it back.
 // By defauly express.static search for index.html
 app.use(express.static(path.join(__dirname, '../public')))
-
 
 // app.use(express.static(path.join(__dirname, '../public'))) already serves index.html when browser calls /
 // We can do additional behaviour here
