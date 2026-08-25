@@ -22,7 +22,7 @@ function authMiddleware (req, res, next) {
             // E.g. in line 25 of todoRoutes.js: const todos = getTodos.all(req.userId)
             req.userId = decoded.id
 
-            // Why we can directed write decoded.id:
+            // Why we can directly write decoded.id:
             // When we created the token during registration and login,
             // const token = jwt.sign({ id: user.id },process.env.JWT_SECRET,{ expiresIn: '24h' })
             // we encoded the id
