@@ -41,7 +41,27 @@ router.post('/', (req, res) => {
 
 // Update a todo
 router.put('/:id', (req, res) => {
-    
+    const { completed } = req.body
+
+    // this gets the 2 from the url http://localhost:5000/todos/2
+    const { id } = req.params
+
+    // extra knowledge: if the url have something like http://localhost:5000/todos/2?page=4
+    // we can get the queries (the stuff after ? in the url)
+    // const { page } = req.query
+
+    try {
+        const updatedTodo = db.prepare(`
+            UPDATE todos 
+            SET completed = ?
+            WHERE id = ?
+            `)
+        updatedTodo.run(completed, id)
+        res.json({ message: "Todo completed" })
+    } catch (err) {
+        console.log(err.message)
+        res.sendStatus(500)
+    }
 })
 
 // Delete a todo
