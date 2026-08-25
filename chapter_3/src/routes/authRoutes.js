@@ -59,6 +59,35 @@ router.post('/login', (req, res) => {
     // with the email in the database
     // We encrypt the password we received and compare it with the the encrypted password
     // in the database (the encryption algorithm is deterministic)
+    const {username, password} = req.body
+
+    try {
+        const getUser = db.prepare(`
+            SELECT * FROM users WHERE username = ?
+            `)
+        const user = getUser.get(username)
+        
+        // If we cannot find a user associated with that username, return out from the function
+        if (!user) {return res.status(404).send({ message: "User not found"})}
+
+        const passwordIsValid = bcrypt.compareSync(password, user.password) // Returns a boolean
+        
+        // If provided password and stored password does not match, return out of the function
+        if (!passwordIsValid) {return res.status(401).send({ message: "Invalid password"})}
+
+        // After the 2 previous if statements checks, we have a successful authentication
+        console.log(user)
+        const token = jwt.sign(
+            { id: user.id }, 
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
+        )
+        res.json({ token })
+
+    } catch (err) {
+        console.log(err.message)
+        res.sendStatus(503)
+    }
 })
 
 export default router
