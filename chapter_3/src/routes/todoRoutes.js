@@ -23,6 +23,19 @@ router.get('/', (req, res) => {
 
 // Create a new todo
 router.post('/', (req, res) => {
+    const { task } = req.body
+
+    try {
+        const insertTodo = db.prepare(`
+            INSERT INTO todos (user_id, task)
+            VALUES (?, ?)
+            `)
+        const result = insertTodo.run(req.userId, task)
+        res.json({ id: result.lastInsertRowid, task, completed: 0 })
+    } catch (err) {
+        console.log(err.message)
+        res.sendStatus(500)
+    }
     
 })
 
