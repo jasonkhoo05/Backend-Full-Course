@@ -19,7 +19,7 @@ function authMiddleware (req, res, next) {
             if (err) {return res.status(401).json({message: "Invalid token"})}
 
             // Adding to req parameter so the endpoint can directly access it 
-            // E.g. in line 25 of todoRoutes.js: const todos = getTodos.all(req.userId)
+            // E.g. in line 20 of todoRoutes.js: const todos = getTodos.all(req.userId)
             req.userId = decoded.id
 
             // Why we can directly write decoded.id:
