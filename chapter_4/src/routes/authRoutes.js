@@ -20,6 +20,8 @@ router.post('/register', async (req, res) => {
     try {
         const user = await prisma.user.create({
             data: {
+                // if the name of the attribute is same as in the schema then can shortcut just write
+                // like line 25
                 username,
                 password: hashedPassword
             }
