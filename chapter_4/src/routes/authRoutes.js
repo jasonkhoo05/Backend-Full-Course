@@ -55,7 +55,7 @@ router.post('/register', async (req, res) => {
     }    
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     // We get the email and look up the encrypted password associated 
     // with the email in the database
     // We encrypt the password we received and compare it with the the encrypted password
@@ -63,10 +63,15 @@ router.post('/login', (req, res) => {
     const {username, password} = req.body
 
     try {
-        const getUser = db.prepare(`
-            SELECT * FROM users WHERE username = ?
-            `)
-        const user = getUser.get(username)
+        // const getUser = db.prepare(`
+        //     SELECT * FROM users WHERE username = ?
+        //     `)
+        // const user = getUser.get(username)
+        const user = await prisma.user.findUnique({
+            where: {
+                username: username
+            }
+        })
         
         // If we cannot find a user associated with that username, return out from the function
         if (!user) {return res.status(404).send({ message: "User not found"})}
