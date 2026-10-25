@@ -12,3 +12,22 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// When we create the conversion between our SQL database and Javascript,
+// We need to create a model for our Javascript to allow it to interpret
+// the SQL tables
+// Todo[] is an array of type Todo
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  password  String
+  todos     Todo[]
+}
+
+model Todo {
+  id        Int       @id @default(autoincrement())
+  task      String
+  completed Boolean   @default(false)
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+}
