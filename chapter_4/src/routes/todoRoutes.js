@@ -1,37 +1,32 @@
 import express from 'express'
 import db from '../db.js'
+import prisma from '../prismaClient.js'
 
 const router = express.Router()
 
 // Get all todos for logged-in user
-router.get('/', (req, res) => {
-    // Inside index.html (line 225), fetchTodos() is called
-    // Then inside fetchTodos() (line 251),
-    // a GET network request is sent to this route.
-    // Inside the headers (line 254), we add the token to Authorization.
-    // When this network request is sent out, authMiddleware.js intercepts it and
-    // check if the token is for a valid user then we only send them back 
-    // todos associated with that particular user and token
+router.get('/', async (req, res) => {
+    const todos = await prisma.todo.findMany({
+        where: {
+            userId: req.userId
+        }
+    })
 
-    const getTodos = db.prepare(`
-        SELECT * FROM todos WHERE user_id = ?`)
-     
-    // We assume the req have access to userId because authMiddleware check already
-    const todos = getTodos.all(req.userId)
     res.json(todos)
 })
 
 // Create a new todo
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const { task } = req.body
 
     try {
-        const insertTodo = db.prepare(`
-            INSERT INTO todos (user_id, task)
-            VALUES (?, ?)
-            `)
-        const result = insertTodo.run(req.userId, task)
-        res.json({ id: result.lastInsertRowid, task, completed: 0 })
+        const insertTodo = await prisma.todo.create({
+            data: {
+                task: task,
+                userId: req.userId
+            }
+        })
+        res.json(insertTodo)
     } catch (err) {
         console.log(err.message)
         res.sendStatus(500)
@@ -40,7 +35,7 @@ router.post('/', (req, res) => {
 })
 
 // Update a todo
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
     const { completed } = req.body
 
     // this gets the 2 from the url http://localhost:5000/todos/2
@@ -51,13 +46,18 @@ router.put('/:id', (req, res) => {
     // const { page } = req.query
 
     try {
-        const updatedTodo = db.prepare(`
-            UPDATE todos 
-            SET completed = ?
-            WHERE id = ?
-            `)
-        updatedTodo.run(completed, id)
-        res.json({ message: "Todo completed" })
+        const updatedTodo = await prisma.todo.update({
+            where: {
+                id: parseInt(id),
+                userId: req.userId
+            },
+            data: {
+                // !! converts number to boolean
+                completed: !!completed
+            }
+        })
+
+        res.json(updatedTodo)
     } catch (err) {
         console.log(err.message)
         res.sendStatus(500)
@@ -65,16 +65,17 @@ router.put('/:id', (req, res) => {
 })
 
 // Delete a todo
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
     const { id } = req.params
     const user_id = req.userId
 
     try {
-        const deleteTodo = db.prepare(`
-            DELETE FROM todos 
-            WHERE id = ? AND user_id = ?
-            `)
-        deleteTodo.run(id, user_id)
+        const deleteTodo = await prisma.todo.delete({
+            where: {
+                id: parseInt(id),
+                user_id
+            }
+        })
         res.json({ message: "Todo deleted" })
     } catch (err) {
         console.log(err.message)
