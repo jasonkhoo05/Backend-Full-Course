@@ -6,7 +6,7 @@ import db from '../db.js'
 const router = express.Router()
 
 // Register a new user endpoint /auth/register
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     // same as const body = req.body then call body.username and body.password
     const {username, password} = req.body
 
@@ -17,25 +17,26 @@ router.post('/register', (req, res) => {
     
     // Save the new user and hashed password to the database
     try {
-        const insertUser = db.prepare(`
-            INSERT INTO users (username, password)
-            VALUES (?, ?)
-            `)
-
-        const resultOfInsertNewUser = insertUser.run(username, hashedPassword)
+        const user = await prisma.user.create({
+            data: {
+                username,
+                password: hashedPassword
+            }
+        })
 
         // After a new user is created, we add their first todo for them
         const defaultTodo = `Hello! Add your first todo`
-        const insertTodo = db.prepare(`
-            INSERT INTO todos (user_id, task)
-            VALUES (?, ?)
-            `)
-        insertTodo.run(resultOfInsertNewUser.lastInsertRowid, defaultTodo)
+        await prisma.todo.create({
+            data: {
+                task: defaultTodo,
+                userId: user.id
+            }
+        })
 
         // We need to create a token associated with the network request
         // that confirms that they are in fact an authenticated user
         const token = jwt.sign(
-            {id: resultOfInsertNewUser.lastInsertRowid}, 
+            {id: user.id}, 
             process.env.JWT_SECRET,
             // This special token that a user can attach to their network request
             // will expire in 24h, then they have to reauthenticate to gain access to a new token
